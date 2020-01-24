@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Welcome!</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                Hello {{user.first_name}} {{user.last_name}}!
+            </div>
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+                <a href="/logout">Logout</a>
+                <a href="/wishes/stats" class="btn btn-light">View Stats</a>
+                <a href="/wishes/new" class="btn btn-light">Make a Wish</a>
+            </div>
+        </div>
+    </div>
+    <div class="wishlist">
+        <table class="table table-striped" style="width: 75%; margin-left: 10%;">
+            <p style="margin-left: 10%; margin-top: 30px;">Your wish list:</p>
+            <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Date Added</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            {% for item in wish%}
+            <tbody>
+                <tr>
+                    <td>{{item.name}}</td>
+                    <td>{{item.created_at}}</td>
+                    <td>
+                        <a href="/wishes/remove/{{item.id}}" style="text-decoration: underline;"
+                            onclick="return confirm('Are you sure you\'d like to remove?')">Remove</a> |
+                        <a href="/wishes/edit/{{item.id}}" style="text-decoration: underline;">Edit</a> |
+                        <a href="/wishes/granted/{{item.id}}" style="text-decoration: underline;"
+                            onclick="return confirm('Confirm wish granted?')"> Granted!</a>
+                    </td>
+                </tr>
+            </tbody>
+            {%endfor%}
+        </table>
+    </div>
+    <div class="granted" style="margin-top: 20px;">
+        <table class="table table-striped" style="width: 75%; margin-left: 10%;">
+            <p style="margin-left: 10%; margin-top: 30px;">Granted wishes:</p>
+            <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Wisher</th>
+                    <th scope="col">Date added</th>
+                    <th scope="col">Date granted</th>
+                    <th scope="col">Likes</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            {% for item in granted %}
+            <tbody>
+                <tr>
+                    <td>{{item.name}}</td>
+                    <td>{{item.user_wished}}</td>
+                    <td>{{item.created_at}}</td>
+                    <td>{{item.updated_at}}</td>
+                    <td># OF LIKES</td>
+                    <td><a href="/like/{{item.id}}" style="text-decoration: underline;">Like!</a></td>
+                </tr>
+            </tbody>
+            {%endfor%}
+        </table>
+    </div>
+</body>
+
+</html>

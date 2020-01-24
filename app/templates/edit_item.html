@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Create A Wish</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                Hello {{user.first_name}} {{user.last_name}}! Let's edit your wish!
+            </div>
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div class="errors">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" style="color: red;" {% endif %}>
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {%endif%}
+    </div>
+    <form action="/wish/update/{{item.id}}" method="POST">
+        {%csrf_token%}
+        <div class="form-group">
+            <label for="inputAddress">I wish for:</label>
+            <input type="text" class="form-control" value="{{item.name}}" name="name">
+        </div>
+        <div class="form-group">
+            <label for="inputAddress2">Description</label>
+            <input type="text" class="form-control" value="{{item.description}}" name="description">
+        </div>
+        <a href="/success" class="btn btn-outline-dark">Cancel</a>
+        <button class="btn btn-outline-dark">Submit Changes</button>
+    </form>
+</body>
+
+</html>
